@@ -58,6 +58,43 @@ EXPOSE 6633 8080 8101 8181
 # Define working directory.
 WORKDIR /opt/distribution-karaf-0.4.1-Beryllium-SR1/bin
 
+RUN sed -i '/^featuresBoot=/ s/$/,\
+                         odl-netconf-api,\
+                         odl-netconf-mapping-api,\
+                         odl-netconf-util,\
+                         odl-netconf-impl,\
+                         odl-config-netconf-connector,\
+                         odl-netconf-netty-util,\
+                         odl-netconf-monitoring,\
+                         odl-netconf-notifications-api,\
+                         odl-netconf-notifications-impl,\
+                         odl-yangtools-models,\
+                         odl-yangtools-data-binding,\
+                         odl-yangtools-binding,\
+                         odl-yangtools-binding-generator,\
+                         http,\
+                         war,\
+                         odl-config-persister,\
+                         odl-config-startup,\
+                         pax-jetty,\
+                         pax-http,\
+                         pax-http-whiteboard,\
+                         pax-war,\
+                         odl-akka-scala,\
+                         odl-akka-system,\
+                         odl-akka-clustering,\
+                         odl-akka-leveldb,\
+                         odl-akka-persistence,\
+                         odl-mdsal-common,\
+                         odl-mdsal-broker-local,\
+                         odl-mdsal-clustering-commons,\
+                         odl-mdsal-distributed-datastore,\
+                         odl-mdsal-remoterpc-connector,\
+                         odl-mdsal-broker,\
+                         odl-config-netty,\
+                         odl-aaa-authn,\
+                         odl-restconf,\
+                         odl-restconf-noauth/' /opt/distribution-karaf-0.4.1-Beryllium-SR1/etc/org.apache.karaf.features.cfg 
 
 # Define default command.
 CMD ["./karaf","server"]
