@@ -1,0 +1,48 @@
+---
+# tasks file for docker-install
+
+  - name: apt-get install transport-https 
+    apt: name=apt-transport-https state=present update_cache=yes
+
+  - name: apt-get install ca-certificates update_cache=yes
+    apt: name=ca-certificates
+
+  - name: Get apt-key
+    shell:  apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+
+  - name: Set docker.list
+    shell: echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" > /etc/apt/sources.list.d/docker.list
+
+  - name: Create docker.list
+    shell: path=/etc/apt/sources.list.d/docker.list state=touch mode="u+rwx,g-wrx,o-rwx"
+
+  - name: Purge lxc-docker
+    shell: apt-get purge lxc-docker
+
+  - name: apt-cache policy docker-engine
+    shell: apt-cache policy docker-engine
+
+  - name: Install appam
+    apt: name=apparmor state=present update_cache=yes
+
+  - name: Install linux-image-extra
+    apt: name=linux-image-extra-{{ ansible_kernel }} state=present update_cache=yes
+
+  - name: Install docker
+    apt: name=docker-engine state=present update_cache=yes
+
+  - name: Start docker service
+    service: name=docker state=started
+
+  - name: Add docker group
+    group: name=docker state=present
+  
+  - name: Add localadmin to docker group
+    user: name={{ ansible_env["SUDO_USER"] }}  append=yes groups=docker
+
+  - name: Docker-PY
+    pip:
+      name: "{{ item }}"
+    with_items:
+    - six==1.4
+    - docker-py==1.1.0

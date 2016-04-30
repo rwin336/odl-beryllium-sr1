@@ -1,0 +1,14 @@
+---
+# tasks file for odl-install
+
+  - name: Pull the docker odl container from DockerHub
+    docker:
+      name: odl-beryllium-sr1
+      image: rwin336/odl-beryllium-sr1
+      state: started
+      pull: always
+      ports:
+      - "0.0.0.0:8181:8181"
+      - "0.0.0.0:6633:6633"
+      - "0.0.0.0:8080:8080"
+      - "0.0.0.0:8101:8101"
