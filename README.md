@@ -2,20 +2,23 @@ odl-beryllium-sr1
 =========
 OpenDaylight Beryllium SR1 Docker container setup and install.
 
-The playbook is desinged to install Docker on a 14.04 Ubuntu following https://docs.docker.com/engine/installation/linux/ubuntulinux/ then install a docker container for an OpenDayLight Beryllium controller.
+The playbook is desinged to install Docker on a Trusty/Xenial Ubuntu following https://docs.docker.com/engine/installation/linux/ubuntulinux/ then install a docker container for an OpenDayLight Beryllium controller.
 
 Then ODL controller has many features installed at boot time and ports exposed to external interface of the target Ubuntu node.  
 
 Requirements
 ------------
 
-Target Ubuntu 14.04 is setup for ansible and able to download containers frmo DockerHub
+Target Ubuntu Trusty/Xenial is setup for ansible and able to download containers frmo DockerHub
 
 Process
 -------
- 1. Clone this repository on a build node capable of running ansible playbooks.
- 2. Update my-hosts.ini file to include the IP Address and user password of the target Ubuntu node.
- 3. Install you public ssh key on the target Ubuntu node.
+ 1. Clone the following repository on a build node capable of running ansible playbooks.
+ 
+      $ git clone https://github.com/rwin336/odl-beryllium-sr1.git
+
+ 2. Update my-hosts.ini file to include the IP Address and ssh user/password of the target Ubuntu node.
+ 3. Install your public ssh key on the target Ubuntu node.
  4. Run the playbook
  
       $ ansible-playbook -i my-hosts.ini ansible/odl-standup.yml
@@ -24,6 +27,8 @@ Process
  
       $ docker ps -a
 
+CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS                                                                                            NAMES
+e70e62457d4c        rwin336/odl-beryllium-sr1   "./karaf server"    2 minutes ago       Up 2 minutes        0.0.0.0:6633->6633/tcp, 0.0.0.0:8080->8080/tcp, 0.0.0.0:8101->8101/tcp, 0.0.0.0:8181->8181/tcp   odl-beryllium-sr1
 
 
 License

@@ -11,13 +11,13 @@
     shell:  apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
   - name: Set docker.list
-    shell: echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" > /etc/apt/sources.list.d/docker.list
+    shell: echo "deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main" > /etc/apt/sources.list.d/docker.list
 
   - name: Create docker.list
     shell: path=/etc/apt/sources.list.d/docker.list state=touch mode="u+rwx,g-wrx,o-rwx"
 
   - name: Purge lxc-docker
-    shell: apt-get purge lxc-docker
+    apt: name=lxc-docker purge=yes state=absent
 
   - name: apt-cache policy docker-engine
     shell: apt-cache policy docker-engine
@@ -25,11 +25,35 @@
   - name: Install appam
     apt: name=apparmor state=present update_cache=yes
 
+  - debug: var=ansible_kernel 
+
   - name: Install linux-image-extra
     apt: name=linux-image-extra-{{ ansible_kernel }} state=present update_cache=yes
 
+  - name: Install git
+    apt: name=git state=present
+  
+  - debug: var=ansible_distribution
+  - debug: var=ansible_distribution_release
+
+  - name: Install aufs-tools
+    apt: name=aufs-tools state=present dpkg_options='force-confnew'
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+
+  - name: Install cgroupfs-mount
+    apt: name=cgroupfs-mount state=present dpkg_options='force-confnew'
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+
+  - name: Install cgroupfs-mount
+    apt: name=cgroupfs-mount state=present dpkg_options='force-confnew'
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+
+  - name: Install cgroup-lite
+    apt: name=cgroup-lite state=present dpkg_options='force-confnew'
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+
   - name: Install docker
-    apt: name=docker-engine state=present update_cache=yes
+    apt: name=docker-engine state=latest dpkg_options='force-confnew'
 
   - name: Start docker service
     service: name=docker state=started
@@ -40,6 +64,12 @@
   - name: Add localadmin to docker group
     user: name={{ ansible_env["SUDO_USER"] }}  append=yes groups=docker
 
+  - name: Install python-setuptools
+    apt: name=python-setuptools state=present
+    
+  - name: Install pip
+    easy_install: name=pip state=latest
+    
   - name: Docker-PY
     pip:
       name: "{{ item }}"
