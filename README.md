@@ -2,9 +2,9 @@ odl-beryllium-sr1
 =========
 OpenDaylight Beryllium SR1 Docker container setup and install.
 
-The playbook is desinged to install Docker on a Trusty/Xenial Ubuntu following https://docs.docker.com/engine/installation/linux/ubuntulinux/ then install a docker container for an OpenDayLight Beryllium controller.
+The playbook is desinged to install Docker on a Trusty/Xenial Ubuntu following https://docs.docker.com/engine/installation/linux/ubuntulinux/ then install/start a docker container for an OpenDayLight Beryllium controller.
 
-Then ODL controller has many features installed at boot time and ports exposed to external interface of the target Ubuntu node.  
+The ODL controller has many features installed at boot time and ports exposed to external interface of the target Ubuntu node.  
 
 Requirements
 ------------
