@@ -1,12 +1,12 @@
 docker-install
 =========
 
-The playbook is desinged to install Docker on a 14.04 Ubuntu following https://docs.docker.com/engine/installation/linux/ubuntulinux/
+The playbook is desinged to install Docker on a Ubuntu Trusty/Xenial following https://docs.docker.com/engine/installation/linux/ubuntulinux/
 
 Requirements
 ------------
 
-Target Ubuntu 14.04 is setup for ansible.
+Target Ubuntu node is setup for ansible.
 
 
 Role Variables

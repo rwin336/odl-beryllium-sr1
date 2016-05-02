@@ -9,7 +9,7 @@ The ODL controller has many features installed at boot time and ports exposed to
 Requirements
 ------------
 
-Target Ubuntu Trusty/Xenial is setup for ansible and able to download containers frmo DockerHub
+Target Ubuntu Trusty/Xenial is setup for ansible and able to download containers from DockerHub
 
 Process
 -------
