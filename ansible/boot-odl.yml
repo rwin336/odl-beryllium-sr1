@@ -1,0 +1,7 @@
+---
+- hosts: odl-controller
+  become: yes
+  become_method: sudo
+
+  roles:
+    - odl-install
